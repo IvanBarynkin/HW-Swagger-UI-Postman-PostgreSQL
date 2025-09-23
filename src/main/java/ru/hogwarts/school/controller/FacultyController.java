@@ -1,11 +1,12 @@
-package ru.hogwarts.school.Controller;
+package ru.hogwarts.school.controller;
 
 import org.springframework.http.ResponseEntity;
+
 import ru.hogwarts.school.Model.Faculty;
-import ru.hogwarts.school.Service.FacultyService;
+import ru.hogwarts.school.service.FacultyService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/faculty")
@@ -27,9 +28,9 @@ public class FacultyController {
         }
     }
 
-    @GetMapping("/filter/{color}")
-    public ResponseEntity<HashMap<Long, Faculty>> filterFaculty(@RequestParam String color) {
-        HashMap<Long, Faculty> filteredFaculty = (HashMap<Long, Faculty>) facultyService.colorFilter(color);
+    @GetMapping
+    public ResponseEntity<List<Faculty>> filterFaculty(@RequestParam String color) {
+        List<Faculty> filteredFaculty = facultyService.colorFilter(color);
         if (filteredFaculty == null) {
             return ResponseEntity.notFound().build();
         } else {

@@ -1,11 +1,12 @@
-package ru.hogwarts.school.Service;
+package ru.hogwarts.school.service;
 
+import ru.hogwarts.school.Model.Faculty;
 import ru.hogwarts.school.Model.Student;
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.Repositories.StudentRepository;
+import ru.hogwarts.school.repositories.StudentRepository;
 
-import java.util.HashMap;
-import java.util.function.Function;
+
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,21 +24,19 @@ public class StudentService {
     }
 
     public Student get(long id) {
-        return studentRepository.getReferenceById(id);
+        return studentRepository.findById(id).get();
     }
 
     public Student update(Long id, Student student) {
-        return studentRepository.save(student);
+        return studentRepository.existsById(id) ? null : studentRepository.save(student);
     }
 
     public void delete(long id) {
         studentRepository.deleteById(id);
     }
 
-    public HashMap<Long, Student> ageFilter(Integer age) {
-        return (HashMap<Long, Student>) studentRepository.findAll().stream()
-                .filter(s -> s.getAge() == age)
-                .collect(Collectors.toMap(Student::getId, Function.identity()));
+    public List<Student> ageFilter(Integer age) {
+        return studentRepository.findByAge(age);
     }
 
 }
