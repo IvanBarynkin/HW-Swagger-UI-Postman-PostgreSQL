@@ -2,10 +2,12 @@ package ru.hogwarts.school.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.Model.Faculty;
 import ru.hogwarts.school.Model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/student")
@@ -24,13 +26,10 @@ public class StudentController {
     }
 
     @GetMapping("/{studentId}")
-    public ResponseEntity<Student> getStudent(@RequestParam long studentId) {
-        Student getStudent = studentService.get(studentId);
-        if (getStudent == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(getStudent);
-        }
+    public ResponseEntity<Student> getStudent(@PathVariable long studentId) {
+        Optional<Student> student = studentService.get(studentId);
+        return student.isEmpty()? ResponseEntity.notFound().build() : ResponseEntity.ok(student.get());
+
     }
 
     @GetMapping
@@ -54,7 +53,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/{studentId}")
-    public ResponseEntity<Student> deleteStudent(@RequestParam long studentId) {
+    public ResponseEntity<Student> deleteStudent(@PathVariable long studentId) {
         studentService.delete(studentId);
         return ResponseEntity.ok().build();
     }

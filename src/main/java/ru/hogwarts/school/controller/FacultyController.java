@@ -7,6 +7,7 @@ import ru.hogwarts.school.service.FacultyService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/faculty")
@@ -19,13 +20,9 @@ public class FacultyController {
     }
 
     @GetMapping("/{facultyId}")
-    public ResponseEntity<Faculty> getFaculty(@RequestParam Long facultyId) {
-        Faculty faculty = facultyService.get(facultyId);
-        if (faculty == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(faculty);
-        }
+    public ResponseEntity<Faculty> getFaculty(@PathVariable Long facultyId) {
+        Optional<Faculty> faculty = facultyService.get(facultyId);
+        return faculty.isEmpty()? ResponseEntity.notFound().build() : ResponseEntity.ok(faculty.get());
     }
 
     @GetMapping
@@ -55,7 +52,7 @@ public class FacultyController {
     }
 
     @DeleteMapping("/{facultyId}")
-    public ResponseEntity<Faculty> deleteFaculty(@RequestParam Long facultyId) {
+    public ResponseEntity<Faculty> deleteFaculty(@PathVariable Long facultyId) {
         facultyService.delete(facultyId);
         return ResponseEntity.ok().build();
     }

@@ -7,6 +7,7 @@ import ru.hogwarts.school.repositories.StudentRepository;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -14,8 +15,8 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
-    public StudentService(StudentRepository studentRepositor) {
-        this.studentRepository = studentRepositor;
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
     }
 
     public Student create(Student student) {
@@ -23,8 +24,8 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student get(long id) {
-        return studentRepository.findById(id).get();
+    public Optional<Student> get(long id) {
+        return studentRepository.findById(id);
     }
 
     public Student update(Long id, Student student) {
@@ -35,7 +36,7 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public List<Student> ageFilter(Integer age) {
+    public List<Student> ageFilter(int age) {
         return studentRepository.findByAge(age);
     }
 
