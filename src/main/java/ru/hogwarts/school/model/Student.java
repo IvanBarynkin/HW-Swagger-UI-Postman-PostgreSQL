@@ -3,7 +3,7 @@ package ru.hogwarts.school.model;
 import jakarta.persistence.*;
 
 @Entity
-public class Student {
+public class student {
 
     @Id
     @GeneratedValue
