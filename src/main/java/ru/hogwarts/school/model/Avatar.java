@@ -18,7 +18,7 @@ public class Avatar {
     private byte[] data;
 
     @OneToOne
-    private ru.hogwarts.school.model.student student;
+    private Student student;
 
     public long getId() {
         return id;
@@ -60,11 +60,11 @@ public class Avatar {
         this.data = data;
     }
 
-    public ru.hogwarts.school.model.student getStudent() {
+    public Student getStudent() {
         return student;
     }
 
-    public void setStudent(ru.hogwarts.school.model.student student) {
+    public void setStudent(Student student) {
         this.student = student;
     }
 }

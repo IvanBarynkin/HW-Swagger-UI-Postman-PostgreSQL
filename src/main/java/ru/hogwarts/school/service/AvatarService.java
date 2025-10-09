@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
-import ru.hogwarts.school.model.student;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.AvatarRepository;
 
 import java.io.*;
@@ -33,7 +33,7 @@ public class AvatarService {
 
     public boolean uploadAvatar(long id, MultipartFile file) throws IOException {
 
-        student student;
+        Student student;
 
         if(studentService.get(id).isEmpty()){
             return false;

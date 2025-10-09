@@ -3,7 +3,7 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.student;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.FacultyRepository;
 
 
@@ -28,7 +28,7 @@ public class FacultyService {
         return facultyRepository.findById(id);
     }
 
-    public Optional<List<student>> getStudents(long id) {
+    public Optional<List<Student>> getStudents(long id) {
         return facultyRepository.findById(id).map(Faculty::getStudents);
     }
 

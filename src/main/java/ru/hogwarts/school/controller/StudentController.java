@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.student;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.StudentService;
 
@@ -26,8 +26,8 @@ public class StudentController {
     }
 
     @GetMapping("/{studentId}")
-    public ResponseEntity<student> getStudent(@PathVariable long studentId) {
-        Optional<student> student = studentService.get(studentId);
+    public ResponseEntity<Student> getStudent(@PathVariable long studentId) {
+        Optional<Student> student = studentService.get(studentId);
         return student.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
@@ -37,15 +37,10 @@ public class StudentController {
         return faculty.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> uploadAvatar(@PathVariable long id, @RequestParam MultipartFile avatar) throws IOException {
-        avatarService.uploadAvatar(id, avatar);
-        return ResponseEntity.ok().build();
-    }
 
-    @GetMapping
-    public ResponseEntity<List<student>> filterAgeStudent(@RequestParam int maxAge, @RequestParam int minAge) {
-        List<student> filteredStudent = studentService.ageBetweenFilter(minAge, maxAge);
+    @GetMapping("/{studentId}/ageFilter")
+    public ResponseEntity<List<Student>> filterAgeStudent(@RequestParam int maxAge, @RequestParam int minAge) {
+        List<Student> filteredStudent = studentService.ageBetweenFilter(minAge, maxAge);
         if (filteredStudent == null) {
             return ResponseEntity.notFound().build();
         } else {
@@ -54,14 +49,14 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<student> createStudent(@RequestBody student student) {
-        ru.hogwarts.school.model.student createStudent = studentService.create(student);
+    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
+        Student createStudent = studentService.create(student);
         return ResponseEntity.ok(createStudent);
     }
 
     @PutMapping
-    public ResponseEntity<student> updateStudent(@RequestBody student student) {
-        ru.hogwarts.school.model.student updateStudent = studentService.update(student.getId(), student);
+    public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
+        Student updateStudent = studentService.update(student.getId(), student);
         if (updateStudent == null) {
             return ResponseEntity.notFound().build();
         } else {
@@ -70,7 +65,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/{studentId}")
-    public ResponseEntity<student> deleteStudent(@PathVariable long studentId) {
+    public ResponseEntity<Student> deleteStudent(@PathVariable long studentId) {
         studentService.delete(studentId);
         return ResponseEntity.ok().build();
     }

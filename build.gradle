@@ -20,10 +20,13 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation group: 'org.postgresql', name: 'postgresql'
+	implementation group: 'org.hibernate', name: 'hibernate-validator', version: '7.0.2.Final'
+	implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '3.0.1'
+	implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.2'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.3'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
