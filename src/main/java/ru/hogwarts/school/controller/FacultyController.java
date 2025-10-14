@@ -26,7 +26,7 @@ public class FacultyController {
         return faculty.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/students/{facultyId}")
+    @GetMapping("/{facultyId}/students")
     public ResponseEntity<List<Student>> getFacultyStudents(@PathVariable Long facultyId) {
         Optional<List<Student>> students = facultyService.getStudents(facultyId);
         return students.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
